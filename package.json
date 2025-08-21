@@ -1,14 +1,16 @@
 {
-  "name": "meu-react",
-  "private": true,
-  "version": "0.0.0",
-  "type": "module",
-  "scripts": {
-    "dev": "vite",
-    "build": "vite build",
-    "lint": "eslint .",
-    "preview": "vite preview"
-  },
+  
+    "homepage": "https://GuiGui-Web114.github.io/mz/",
+    "name": "MZ",
+    "version": "1.0.0",
+    "private": true,
+    "scripts": {
+      "dev": "vite",
+      "build": "vite build",
+      "preview": "vite preview",
+      "predeploy": "npm run build",
+      "deploy": "gh-pages -d dist"
+    },
   "dependencies": {
     "@popperjs/core": "^2.11.8",
     "axios": "^1.7.9",
