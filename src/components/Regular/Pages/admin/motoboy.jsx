@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Container, Table, Button, Alert,Nav,Navbar } from "react-bootstrap";
 import dayjs from "dayjs";
 import { useNavigate } from "react-router-dom";
-import DynamicNavbar from "../NAV.JSX";
+import DynamicNavbar from "../NAV.jsx";
 function EntregarEncomendas() {
   const [encomendas, setEncomendas] = useState([]);
   const [msg, setMsg] = useState("");
@@ -13,7 +13,7 @@ function EntregarEncomendas() {
 
   const buscarEncomendas = async () => {
     try {
-      const res = await fetch("http://localhost:5000/admin/encomendas/moto");
+      const res = await fetch("http://localhost:5002/admin/encomendas/moto");
       const data = await res.json();
       const aceitas = data.filter((e) => e.status === "aceita");
       setEncomendas(aceitas);
@@ -24,7 +24,7 @@ function EntregarEncomendas() {
 
   const marcarEntregue = async (id) => {
     try {
-      const res = await fetch(`http://localhost:5000/admin/encomendas/${id}`, {
+      const res = await fetch(`http://localhost:5002/admin/encomendas/${id}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",

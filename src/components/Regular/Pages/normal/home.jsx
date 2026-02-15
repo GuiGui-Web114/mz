@@ -1,13 +1,13 @@
 import { useState, useEffect } from "react";
 import { Container, Row, Col, Card, Carousel, Button, Form } from "react-bootstrap";
-import DynamicNavbar from "../NAV.JSX";
+import DynamicNavbar from "../NAV.jsx";
 
 function Home() {
   const [produtos, setProdutos] = useState([]);
   const [carrinho, setCarrinho] = useState({}); // { produtoId: quantidade }
 
   useEffect(() => {
-    fetch("http://localhost:5000/admin/materiais")
+    fetch("http://localhost:5002/admin/materiais")
       .then(res => res.json())
       .then(setProdutos)
       .catch(err => console.error("Erro ao carregar produtos:", err));
@@ -39,7 +39,7 @@ function Home() {
     if (itens.length === 0) return alert("Carrinho vazio");
   
     try {
-      const res = await fetch("http://localhost:5000/admin/vendas", {
+      const res = await fetch("http://localhost:5002/admin/vendas", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -79,7 +79,7 @@ function Home() {
             </Col>
             <Col md={6}>
               <img
-                src="https://cdn.pixabay.com/photo/2016/03/05/19/02/construction-1230522_960_720.jpg"
+                src="https:https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS5152eQeZjY01w41s8IZAmqZQLwe-zHfPh1IwMz_rnvliP1TgCMuI0ZoN7Bm_uT3CwZUs&usqp=CAU"
                 alt="Materiais de construção"
                 className="img-fluid rounded shadow"
               />
@@ -99,29 +99,14 @@ function Home() {
                   {grupo.map(item => (
                     <Col md={4} key={item.id} className="mb-4">
                       <Card className="h-100 shadow-sm">
-                        {item.imagem && <Card.Img variant="top" src={`http://localhost:5000${item.imagem}`} />}
+                        {item.imagem && <Card.Img variant="top" src={`http://localhost:5002${item.imagem}`} />}
                         <Card.Body>
                           <Card.Title>{item.nome}</Card.Title>
                           <Card.Text>{item.descricao || "Sem descrição"}</Card.Text>
                           <Card.Text className="fw-bold text-primary">
                             {item.preco?.toLocaleString()} KZ
                           </Card.Text>
-                          <Form.Group className="mb-2">
-                            <Form.Label>Quantidade</Form.Label>
-                            <Form.Control
-                              type="number"
-                              min={0}
-                              value={carrinho[item.id] || 0}
-                              onChange={(e) => handleQuantidadeChange(item.id, e.target.value)}
-                            />
-                          </Form.Group>
-                          <Button
-                            variant="primary"
-                            className="w-100"
-                            onClick={() => handleAdicionarCarrinho(item)}
-                          >
-                            Adicionar ao Carrinho
-                          </Button>
+                         
                         </Card.Body>
                       </Card>
                     </Col>
@@ -131,9 +116,6 @@ function Home() {
             ))}
           </Carousel>
 
-          <div className="text-center mt-4">
-            <Button onClick={handleFinalizarVenda} size="lg">Finalizar Venda</Button>
-          </div>
         </Container>
       </section>
 

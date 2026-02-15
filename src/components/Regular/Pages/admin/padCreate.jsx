@@ -10,7 +10,7 @@ import {
   Spinner,
 } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
-import DynamicNavbar from "../NAV.JSX";
+import DynamicNavbar from "../NAV.jsx";
 function CadastroProduto() {
   const [produtos, setProdutos] = useState([]);
  const [novo, setNovo] = useState({
@@ -23,9 +23,9 @@ function CadastroProduto() {
 
   const [carregando, setCarregando] = useState(false);
 
-  const rendimento = (farinha) => Math.floor(50000 / farinha); // 50kg de farinha por saco
+  const rendimento = (farinha) => Math.floor(50020 / farinha); // 50kg de farinha por saco
 
-  const API = "http://localhost:5000/admin/produtos";
+  const API = "http://localhost:5002/admin/produtos";
 
   // Carregar produtos do backend
   useEffect(() => {

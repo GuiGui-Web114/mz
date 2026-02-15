@@ -30,11 +30,16 @@ import ReportsAdmin from './components/Regular/Pages/admin/estoqueEntrada.jsx'
 import EstoqueCaixa from './components/Regular/Pages/admin/caixaarmazem.jsx'
 import VendasAdmin from './components/Regular/Pages/admin/cO.jsx'
 import AdminEstoque from './components/Regular/Pages/admin/adminEstoque.jsx'
-import PadeiroEstoque from './components/Regular/Pages/admin/padeiroEstoque.jsx'
+import SaidaEstoque from './components/Regular/Pages/admin/stocky.jsx'
 import ConfigurarTurnos from './components/Regular/Pages/admin/configAdmin.jsx'
 import Fornecedores from './components/Regular/Pages/admin/AdminTurnoC.jsx'
 import EmpresaConfig from './components/Regular/Pages/admin/config.jsx'
 import Materiais from './components/Regular/Pages/admin/padUR'
+import DebtManagementAdmin from './components/Regular/Pages/admin/div.jsx'
+import VendasParceladas from './components/Regular/Pages/admin/vendaDiv.jsx'
+import CriarDivida from './components/Regular/Pages/admin/div2.jsx'
+import RelatorioLucro from './components/Regular/Pages/admin/lucro.jsx'
+
 const router = createBrowserRouter([
 {
   path:"/",
@@ -100,10 +105,24 @@ const router = createBrowserRouter([
     path:"/office/admin/turnos",
     element:<ConfigurarTurnos/>,
   }, 
-   
+  {
+    path:"/office/admin/saidaEstoque",
+    element:<SaidaEstoque/>,
+  }, 
    {
     path:"/office/admin/estoque/geral",
     element:<EstoqueGeral/>,
+  }, {
+    path:"/office/admin/divida/criar",
+    element:<CriarDivida/>,
+  },
+  {
+    path:"/office/admin/divida",
+    element:<DebtManagementAdmin/>,
+  },
+  {
+    path:"/office/admin/vendas/divida",
+    element:<VendasParceladas/>,
   },
    {
     path:"/office/admin/vendas",
@@ -119,6 +138,9 @@ const router = createBrowserRouter([
   {
     path:"/office/admin/categorias",
     element:<Categorias/>,
+  }, {
+    path:"/office/admin/lucro",
+    element:<RelatorioLucro/>,
   },
   {
     path:"/office/admin/dashboard",

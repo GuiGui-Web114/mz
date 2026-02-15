@@ -10,7 +10,7 @@ import {
   Legend
 } from "chart.js";
 import * as Icon from "react-bootstrap-icons";
-import DynamicNavbar from "../NAV.JSX";
+import DynamicNavbar from "../NAV.jsx";
 
 ChartJS.register(BarElement, CategoryScale, LinearScale, Tooltip, Legend);
 
@@ -28,7 +28,7 @@ export default function AdminDashboard() {
   async function carregarDados(periodo) {
     setLoading(true);
     try {
-      const res = await fetch(`http://localhost:5000/admin/vendas-${periodo}`);
+      const res = await fetch(`http://localhost:5002/admin/vendas-${periodo}`);
       const vendasData = await res.json();
 
       // Totais

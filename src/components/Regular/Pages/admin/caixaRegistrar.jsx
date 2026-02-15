@@ -10,7 +10,7 @@ import {
   Navbar,
   Nav,
 } from "react-bootstrap";
-import DynamicNavbar from "../NAV.JSX";
+import DynamicNavbar from "../NAV.jsx";
 
 function RegistrarRecebimento() {
   const [produtos, setProdutos] = useState([]);
@@ -18,7 +18,7 @@ function RegistrarRecebimento() {
   const [carregando, setCarregando] = useState(false);
 
   useEffect(() => {
-    fetch("http://localhost:5000/admin/produtos")
+    fetch("http://localhost:5002/admin/produtos")
       .then((res) => res.json())
       .then(setProdutos);
   }, []);
@@ -28,7 +28,7 @@ function RegistrarRecebimento() {
     if (enviados.length === 0) return alert("Nenhuma quantidade válida inserida.");
 
     setCarregando(true);
-    const res = await fetch("http://localhost:5000/admin/entradaprodutos", {
+    const res = await fetch("http://localhost:5002/admin/entradaprodutos", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ produtos: enviados }),

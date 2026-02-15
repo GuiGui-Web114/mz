@@ -1,7 +1,7 @@
 // PadeiroEstoque.jsx
 import React, { useState, useEffect } from 'react';
 import { Container, Row, Col, Card, Form, Button, Table, Alert } from 'react-bootstrap';
-import DynamicNavbar from '../NAV.JSX';
+import DynamicNavbar from '../NAV.jsx';
 
 export default function PadeiroEstoque() {
   const [items, setItems] = useState([]);
@@ -13,7 +13,7 @@ export default function PadeiroEstoque() {
 
   async function fetchStatus() {
     setLoading(true);
-    const res = await fetch('http://localhost:5000/admin/estoque/status');
+    const res = await fetch('http://localhost:5002/admin/estoque/status');
     const data = await res.json();
     setItems(data.geral);
     setLoading(false);
@@ -23,7 +23,7 @@ export default function PadeiroEstoque() {
     e.preventDefault();
     setMsg(null);
 
-    const url = `http://localhost:5000/admin/estoque/${entry.tipo === 'devolucao' ? 'devolucao' : 'saida'}`;
+    const url = `http://localhost:5002/admin/estoque/${entry.tipo === 'devolucao' ? 'devolucao' : 'saida'}`;
     const payload = {
       funcionarioId: 2,
       item_id: entry.item_id,

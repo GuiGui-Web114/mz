@@ -4,22 +4,24 @@ import {
   Table,
   Button,
   Form,
-  Row,
+  Row,Modal,
   Col,
   Card,
   Badge,
 } from "react-bootstrap";
 import dayjs from "dayjs";
-import DynamicNavbar from "../NAV.JSX";
+import DynamicNavbar from "../NAV.jsx";
 
 export default function RelatorioVendas() {
   const [vendas, setVendas] = useState([]);
   const [filtro, setFiltro] = useState("");
   const [datasUnicas, setDatasUnicas] = useState([]);
+const [pdfUrl, setPdfUrl] = useState(null);
+const [showPdfModal, setShowPdfModal] = useState(false);
 
   useEffect(() => {
     async function carregarVendas() {
-      const res = await fetch("http://localhost:5000/admin/vendas");
+      const res = await fetch("http://localhost:5002/admin/vendas");
       const lista = await res.json();
       const datas = [...new Set(lista.map(v => dayjs(v.data).format("YYYY-MM-DD")))];
       setVendas(lista);
@@ -28,6 +30,17 @@ export default function RelatorioVendas() {
     }
     carregarVendas();
   }, []);
+const abrirPdfModal = async (vendaId) => {
+  try {
+    const res = await fetch(`http://localhost:5002/admin/vendas/${vendaId}/ticket`);
+    const data = await res.json();
+    setPdfUrl(`http://localhost:5002${data.url}`);
+    setShowPdfModal(true);
+  } catch (err) {
+    console.error(err);
+    alert("Erro ao buscar PDF");
+  }
+};
 
   // Agrupa por data
   const agrupadas = vendas.reduce((acc, venda) => {
@@ -42,7 +55,7 @@ export default function RelatorioVendas() {
   // Exporta factura individual
   const gerarFactura = async (vendaId) => {
     try {
-      const res = await fetch("http://localhost:5000/admin/facturas", {
+      const res = await fetch("http://localhost:5002/admin/vendas/"+vendaId+"/fatura", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ vendaId }),
@@ -97,25 +110,35 @@ export default function RelatorioVendas() {
                   <Badge bg="secondary" className="mt-1">#{venda.id}</Badge>
                 </td>
                 <td>
-                  {venda.itens?.map(item => (
-                    <div key={item.id}>{item.produto?.nome || "Produto"}</div>
+                  {venda.Materiais?.map(item => (
+                    <div key={item.id}>{item.Materiais?.nome || "Produto"}</div>
                   ))}
                 </td>
                 <td>
-                  {venda.itens?.map((item, idx) => (
+                  {venda.Materiais?.map((item, idx) => (
                     <div key={idx}>{item.quantidade}x</div>
                   ))}
                 </td>
                 <td>Kz {Number(venda.total).toLocaleString()}</td>
                 <td>
-                  <Button size="sm" variant="warning" onClick={() => gerarFactura(venda.id)}>
-                    Gerar Factura
-                  </Button>
+                  <Button size="sm" variant="info" onClick={() => abrirPdfModal(venda.id)}>
+  Ver Ticket
+</Button>
+
                 </td>
               </tr>
             ))}
           </tbody>
         </Table>
+        <Modal show={showPdfModal} onHide={() => setShowPdfModal(false)} size="xl">
+  <Modal.Header closeButton>
+    <Modal.Title>Ticket</Modal.Title>
+  </Modal.Header>
+  <Modal.Body style={{ height: "75vh", padding: 0 }}>
+    {pdfUrl && <iframe src={pdfUrl} style={{ width: "100%", height: "100%" }} />}
+  </Modal.Body>
+</Modal>
+
       </Container>
     </>
   );

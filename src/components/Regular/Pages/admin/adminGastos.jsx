@@ -1,13 +1,13 @@
 import { useEffect, useState } from "react";
 import { Container, Form, Button, Table } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
-import DynamicNavbar from "../NAV.JSX";
+import DynamicNavbar from "../NAV.jsx";
 
 function Gastos() {
   const [gastos, setGastos] = useState([]);
   const [form, setForm] = useState({ tipo: "", valor: "", data: "" });
   const [carregando, setCarregando] = useState(false);
-  const API = "http://localhost:5000/admin/gastos";
+  const API = "http://localhost:5002/admin/gastos";
 
   const tiposDeGasto = [
     "Energia",

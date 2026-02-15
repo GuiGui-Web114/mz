@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Container, Row, Col, Card } from "react-bootstrap";
-import DynamicNavbar from "../NAV.JSX";
+import DynamicNavbar from "../NAV.jsx";
 
 export default function Sobre() {
   const [empresa, setEmpresa] = useState({
@@ -12,7 +12,7 @@ export default function Sobre() {
   });
 
   useEffect(() => {
-    fetch("http://localhost:5000/admin/empresa")
+    fetch("http://localhost:5002/admin/empresa")
       .then((res) => res.json())
       .then((data) => setEmpresa(data))
       .catch((err) => console.error("Erro ao buscar dados da empresa:", err));

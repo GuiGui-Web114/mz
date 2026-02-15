@@ -8,10 +8,10 @@ import {
   Nav,
 } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
-import DynamicNavbar from "../NAV.JSX";
+import DynamicNavbar from "../NAV.jsx";
 
 function HistoricoEntregas() {
-  const API_BASE = "http://localhost:5000/admin";
+  const API_BASE = "http://localhost:5002/admin";
   const [encomendas, setEncomendas] = useState([]);
   const [encomendasFiltradas, setEncomendasFiltradas] = useState([]);
   const [datasDisponiveis, setDatasDisponiveis] = useState([]);

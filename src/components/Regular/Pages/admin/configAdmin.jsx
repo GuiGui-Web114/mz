@@ -1,9 +1,9 @@
 import { useState, useEffect } from "react";
 import { Container, Form, Button, Table, Alert } from "react-bootstrap";
-import DynamicNavbar from "../NAV.JSX";
+import DynamicNavbar from "../NAV.jsx";
 
 export default function ConfigurarTurnos() {
-  const API = "http://localhost:5000/admin";
+  const API = "http://localhost:5002/admin";
   const [configs, setConfigs] = useState([]);
   const [form, setForm] = useState({
     cargo: "",

@@ -1,16 +1,15 @@
 {
-  
-    "homepage": "https://GuiGui-Web114.github.io/mz/",
-    "name": "MZ",
-    "version": "1.0.0",
-    "private": true,
-    "scripts": {
-      "dev": "vite",
-      "build": "vite build",
-      "preview": "vite preview",
-      "predeploy": "npm run build",
-      "deploy": "gh-pages -d dist"
-    },
+  "name": "meu-react",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "deploy": "gh-pages -d dist",
+    "dev": "vite",
+    "build": "vite build",
+    "lint": "eslint .",
+    "preview": "vite preview"
+  },
   "dependencies": {
     "@popperjs/core": "^2.11.8",
     "axios": "^1.7.9",
@@ -18,15 +17,17 @@
     "chart.js": "^4.5.0",
     "dayjs": "^1.11.13",
     "html2canvas": "^1.4.1",
-    "jspdf": "^3.0.1",
+    "jspdf": "^4.1.0",
     "jspdf-autotable": "^5.0.2",
+    "lucide-react": "^0.546.0",
     "react": "^18.3.1",
     "react-bootstrap": "^2.10.8",
     "react-bootstrap-icons": "^1.11.6",
     "react-chartjs-2": "^5.3.0",
     "react-dom": "^18.3.1",
     "react-icons": "^5.4.0",
-    "react-router-dom": "^7.1.3"
+    "react-router-dom": "^7.1.3",
+    "rollup": "^4.52.5"
   },
   "devDependencies": {
     "@eslint/js": "^9.13.0",
@@ -37,8 +38,9 @@
     "eslint-plugin-react": "^7.37.1",
     "eslint-plugin-react-hooks": "^5.0.0",
     "eslint-plugin-react-refresh": "^0.4.13",
+    "gh-pages": "^6.3.0",
     "globals": "^15.11.0",
     "sass": "^1.83.4",
-    "vite": "^5.4.9"
+    "vite": "^7.1.12"
   }
 }

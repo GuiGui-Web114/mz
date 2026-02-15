@@ -11,7 +11,7 @@ export default function EstoqueCaixa() {
   useEffect(() => {
     (async () => {
       try {
-        const res = await fetch("http://localhost:5000/admin/estoque_itens");
+        const res = await fetch("http://localhost:5002/admin/estoque_itens");
         const data = await res.json();
         setItens(data);
       } catch {
@@ -23,7 +23,7 @@ export default function EstoqueCaixa() {
   const registrarSaida = async () => {
     setMsg("");
     try {
-      const res = await fetch("http://localhost:5000/admin/estoque/saida", {
+      const res = await fetch("http://localhost:5002/admin/estoque/saida", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({

@@ -1,7 +1,7 @@
 // src/components/Regular/Pages/admin/config.jsx
 import { useEffect, useState } from "react";
 import { Form, Button, Container, Row, Col, Image, Alert, Spinner } from "react-bootstrap";
-import DynamicNavbar from "../NAV.JSX"; // ajusta o caminho se necessário
+import DynamicNavbar from "../NAV.jsx"; // ajusta o caminho se necessário
 
 export default function EmpresaConfig() {
   const [empresa, setEmpresa] = useState({}); // nunca null
@@ -9,7 +9,7 @@ export default function EmpresaConfig() {
     nome: "",
     email: "",
     endereco: "",
-    contactos: "",
+    telefone: "",
     horarios: "",
     logoFile: null,
     logoUrl: "",
@@ -24,7 +24,7 @@ export default function EmpresaConfig() {
     (async () => {
       setLoading(true);
       try {
-        const res = await fetch("http://localhost:5000/admin/empresa");
+        const res = await fetch("http://localhost:5002/admin/empresa");
         if (!res.ok) {
           // se 404 ou erro, mantemos form vazio
           if (mounted) setEmpresa({});
@@ -37,7 +37,7 @@ export default function EmpresaConfig() {
           nome: data?.nome || "",
           email: data?.email || "",
           endereco: data?.endereco || "",
-          contactos: data?.contactos || "",
+          telefone: data?.telefone || "",
           horarios: data?.horarios || "",
           logoFile: null,
           logoUrl: normalizeUrl(data?.logo || data?.logoUrl || data?.imagem || ""),
@@ -56,7 +56,7 @@ export default function EmpresaConfig() {
   function normalizeUrl(u) {
     if (!u) return "";
     if (u.startsWith("http://") || u.startsWith("https://")) return u;
-    return `${window.location.origin}${u}`;
+    return `http://localhost:5002${u}`;
   }
 
   // cria preview objectURL quando o user escolhe um ficheiro
@@ -91,11 +91,11 @@ export default function EmpresaConfig() {
       fd.append("nome", formData.nome || "");
       fd.append("email", formData.email || "");
       fd.append("endereco", formData.endereco || "");
-      fd.append("contactos", formData.contactos || "");
+      fd.append("telefone", formData.telefone || "");
       fd.append("horarios", formData.horarios || "");
       if (formData.logoFile) fd.append("logo", formData.logoFile);
 
-      const res = await fetch("http://localhost:5000/admin/empresa", {
+      const res = await fetch("http://localhost:5002/admin/empresa", {
         method: "POST",
         body: fd,
       });
@@ -157,8 +157,8 @@ export default function EmpresaConfig() {
                 </Form.Group>
 
                 <Form.Group className="mb-2">
-                  <Form.Label>Contactos</Form.Label>
-                  <Form.Control name="contactos" value={formData.contactos} onChange={handleChange} />
+                  <Form.Label>telefone</Form.Label>
+                  <Form.Control name="telefone" value={formData.telefone} onChange={handleChange} />
                 </Form.Group>
               </Col>
 

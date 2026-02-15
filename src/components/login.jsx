@@ -27,7 +27,7 @@ export default function LoginFuncionario() {
     let mounted = true;
     (async () => {
       try {
-        const res = await fetch("http://localhost:5000/admin/empresa");
+        const res = await fetch("http://localhost:5002/admin/empresa");
         if (!res.ok) {
           if (mounted) setEmpresa({});
           return;

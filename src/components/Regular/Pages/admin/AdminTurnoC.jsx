@@ -14,7 +14,7 @@ import {
   Image,
   InputGroup,
 } from "react-bootstrap";
-import DynamicNavbar from "../NAV.JSX";
+import DynamicNavbar from "../NAV.jsx";
 
 export default function Fornecedores() {
   const [fornecedores, setFornecedores] = useState([]);
@@ -55,7 +55,7 @@ export default function Fornecedores() {
     setLoading(true);
     setErro(null);
     try {
-      const res = await fetch("http://localhost:5000/admin/fornecedores");
+      const res = await fetch("http://localhost:5002/admin/fornecedores");
       if (!res.ok) throw new Error("Falha ao buscar fornecedores");
       const data = await res.json();
       setFornecedores(Array.isArray(data) ? data : []);
@@ -85,7 +85,7 @@ export default function Fornecedores() {
       if (novo.logoFile) fd.append("logo", novo.logoFile);
       if (novo.docFile) fd.append("documento", novo.docFile);
 
-      const res = await fetch("http://localhost:5000/admin/fornecedores", {
+      const res = await fetch("http://localhost:5002/admin/fornecedores", {
         method: "POST",
         body: fd,
       });
@@ -152,7 +152,7 @@ export default function Fornecedores() {
       if (editObj.logoFile) fd.append("logo", editObj.logoFile);
       if (editObj.docFile) fd.append("documento", editObj.docFile);
 
-      const res = await fetch(`http://localhost:5000/admin/fornecedores/${editObj.id}`, {
+      const res = await fetch(`http://localhost:5002/admin/fornecedores/${editObj.id}`, {
         method: "PUT",
         body: fd,
       });
@@ -186,7 +186,7 @@ export default function Fornecedores() {
     setDelSaving(true);
     setErro(null);
     try {
-      const res = await fetch(`http://localhost:5000/admin/fornecedores/${toDelete.id}`, {
+      const res = await fetch(`http://localhost:5002/admin/fornecedores/${toDelete.id}`, {
         method: "DELETE",
       });
       if (!res.ok) {
@@ -352,7 +352,7 @@ export default function Fornecedores() {
                         <tr key={f.id} style={{ cursor: "pointer" }}>
                           <td style={{ width: 80 }}>
                             {f.logo ? (
-                              <Image src={`http://localhost:5000${f.logo}`} rounded style={{ width: 50, height: 50, objectFit: "cover" }} />
+                              <Image src={`http://localhost:5002${f.logo}`} rounded style={{ width: 50, height: 50, objectFit: "cover" }} />
                             ) : (
                               <div style={{ width: 50, height: 50, background: "#eee", display: "flex", alignItems: "center", justifyContent: "center" }}>—</div>
                             )}
@@ -397,7 +397,7 @@ export default function Fornecedores() {
                       <tr key={f.id}>
                         <td>
                           {f.logo ? (
-                            <Image src={`http://localhost:5000${f.logo}`} rounded style={{ width: 50, height: 50, objectFit: "cover" }} />
+                            <Image src={`http://localhost:5002${f.logo}`} rounded style={{ width: 50, height: 50, objectFit: "cover" }} />
                           ) : (
                             <div style={{ width: 50, height: 50, background: "#eee" }} />
                           )}
@@ -410,7 +410,7 @@ export default function Fornecedores() {
                         <td>{f.nif}</td>
                         <td>
                           {f.documento ? (
-                            <a href={`http://localhost:5000${f.documento}`} target="_blank" rel="noreferrer">Ver</a>
+                            <a href={`http://localhost:5002${f.documento}`} target="_blank" rel="noreferrer">Ver</a>
                           ) : (
                             "—"
                           )}
@@ -487,7 +487,7 @@ export default function Fornecedores() {
                     </Form.Group>
                     <div className="mb-2">
                       {editObj.logoUrl ? (
-                        <Image src={editObj.logoUrl.startsWith("http") ? editObj.logoUrl : `http://localhost:5000${editObj.logoUrl}`} rounded style={{ width: 90, height: 90, objectFit: "cover" }} />
+                        <Image src={editObj.logoUrl.startsWith("http") ? editObj.logoUrl : `http://localhost:5002${editObj.logoUrl}`} rounded style={{ width: 90, height: 90, objectFit: "cover" }} />
                       ) : <div style={{ width: 90, height: 90, background: "#eee" }} />}
                     </div>
                   </Col>

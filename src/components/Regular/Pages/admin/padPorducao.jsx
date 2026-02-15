@@ -10,7 +10,7 @@ import {
 import { useNavigate } from "react-router-dom";
 import jsPDF from "jspdf";
 import autoTable from "jspdf-autotable";
-import DynamicNavbar from "../NAV.JSX";
+import DynamicNavbar from "../NAV.jsx";
 
 export default function RegistroProducao() {
   const [produtos, setProdutos] = useState([]);
@@ -23,7 +23,7 @@ export default function RegistroProducao() {
   const [dataSelecionada, setDataSelecionada] = useState("");
   const [padeiroSelecionado, setPadeiroSelecionado] = useState("");
 
-  const API_BASE = "http://localhost:5000/admin";
+  const API_BASE = "http://localhost:5002/admin";
   const navigate = useNavigate();
 
   useEffect(() => {

@@ -1,4 +1,4 @@
-const BASE = "http://127.0.0.1:5000/admin";
+const BASE = "http://127.0.0.1:5002/admin";
 
 // === PRODUTOS ===
 export const getProdutos = async () => {

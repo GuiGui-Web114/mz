@@ -14,7 +14,7 @@ import {
   InputGroup,
 } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
-import DynamicNavbar from "../NAV.JSX";
+import DynamicNavbar from "../NAV.jsx";
 
 export default function UserManager() {
   const [users, setUsers] = useState([]);
@@ -51,7 +51,7 @@ export default function UserManager() {
   async function fetchUsers() {
     setLoading(true);
     try {
-      const res = await fetch("http://localhost:5000/admin/users");
+      const res = await fetch("http://localhost:5002/admin/users");
       if (!res.ok) throw new Error("Erro ao buscar usuários");
       const data = await res.json();
       setUsers(Array.isArray(data) ? data : []);
@@ -104,7 +104,7 @@ export default function UserManager() {
 
       let res;
       if (form.id) {
-        res = await fetch(`http://localhost:5000/admin/users/${form.id}`, {
+        res = await fetch(`http://localhost:5002/admin/users/${form.id}`, {
           method: "PUT",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(payload),
@@ -116,7 +116,7 @@ export default function UserManager() {
           return;
         }
         payload.senha = form.senha;
-        res = await fetch("http://localhost:5000/admin/users", {
+        res = await fetch("http://localhost:5002/admin/users", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(payload),
@@ -150,7 +150,7 @@ export default function UserManager() {
     setConfirmDelete({ show: false, id: null, nome: "" });
     if (!id) return;
     try {
-      const res = await fetch(`http://localhost:5000/admin/users/${id}`, { method: "DELETE" });
+      const res = await fetch(`http://localhost:5002/admin/users/${id}`, { method: "DELETE" });
       if (!res.ok) throw new Error("Erro ao apagar usuário");
       setSuccess("Usuário apagado.");
       fetchUsers();

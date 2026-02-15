@@ -4,7 +4,7 @@ import {
 } from 'react-bootstrap';
 import jsPDF from 'jspdf';
 import autoTable from 'jspdf-autotable';
-import DynamicNavbar from '../NAV.JSX';
+import DynamicNavbar from '../NAV.jsx';
 
 const caixaItems = [
   'Farinha', 'Fermento', 'Sal', 'Óleo', 'Ovo',
@@ -26,7 +26,7 @@ export default function EstoqueCaixa() {
   async function fetchStatus() {
     setLoading(true);
     try {
-      const res = await fetch('http://localhost:5000/admin/estoque/status');
+      const res = await fetch('http://localhost:5002/admin/estoque/status');
       const { geral } = await res.json();
       setItems(geral);
     } catch (err) {
@@ -38,7 +38,7 @@ export default function EstoqueCaixa() {
 
   async function fetchHistorico() {
     try {
-      const res = await fetch('http://localhost:5000/admin/estoque/historico');
+      const res = await fetch('http://localhost:5002/admin/estoque/historico');
       const data = await res.json();
       setHistorico(data);
     } catch (err) {
@@ -52,7 +52,7 @@ export default function EstoqueCaixa() {
     if (!item_id || !quantidade) return;
 
     try {
-      await fetch('http://localhost:5000/admin/estoque/entrada', {
+      await fetch('http://localhost:5002/admin/estoque/entrada', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({

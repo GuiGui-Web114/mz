@@ -12,7 +12,7 @@ import {
   Alert,
   Spinner,
 } from "react-bootstrap";
-import DynamicNavbar from "../NAV.JSX";
+import DynamicNavbar from "../NAV.jsx";
 
 export default function Categorias() {
   const [categorias, setCategorias] = useState([]);
@@ -42,7 +42,7 @@ export default function Categorias() {
     setLoading(true);
     setErro(null);
     try {
-      const res = await fetch("http://localhost:5000/admin/categorias");
+      const res = await fetch("http://localhost:5002/admin/categorias");
       if (!res.ok) throw new Error("Falha ao buscar categorias");
       const data = await res.json();
       setCategorias(Array.isArray(data) ? data : []);
@@ -61,7 +61,7 @@ export default function Categorias() {
     setSaving(true);
     setErro(null);
     try {
-      const res = await fetch("http://localhost:5000/admin/categorias", {
+      const res = await fetch("http://localhost:5002/admin/categorias", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ nome: nome.trim() }),
@@ -94,7 +94,7 @@ export default function Categorias() {
     setEditSaving(true);
     setErro(null);
     try {
-      const res = await fetch(`http://localhost:5000/admin/categorias/${editCategoria.id}`, {
+      const res = await fetch(`http://localhost:5002/admin/categorias/${editCategoria.id}`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ nome: editNome.trim() }),
@@ -126,7 +126,7 @@ export default function Categorias() {
     setDeleteSaving(true);
     setErro(null);
     try {
-      const res = await fetch(`http://localhost:5000/admin/categorias/${deleteCategoria.id}`, {
+      const res = await fetch(`http://localhost:5002/admin/categorias/${deleteCategoria.id}`, {
         method: "DELETE",
       });
       if (!res.ok) {

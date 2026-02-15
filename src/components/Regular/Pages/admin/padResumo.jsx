@@ -3,7 +3,7 @@ import { Container, Table, Form, Accordion, Button } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import jsPDF from "jspdf";
 import autoTable from "jspdf-autotable";
-import DynamicNavbar from "../NAV.JSX";
+import DynamicNavbar from "../NAV.jsx";
 
 function ResumoProducao() {
   const [resumo, setResumo] = useState({});
@@ -11,7 +11,7 @@ function ResumoProducao() {
   const [datasUnicas, setDatasUnicas] = useState([]);
 
   useEffect(() => {
-    fetch("http://localhost:5000/admin/producao")
+    fetch("http://localhost:5002/admin/producao")
       .then((res) => res.json())
       .then((dados) => {
         const agrupado = {};

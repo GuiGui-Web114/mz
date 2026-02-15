@@ -1,4 +1,3 @@
-// src/components/DynamicNavbar.jsx
 import { useEffect, useState } from "react";
 import { Navbar, Nav, Container, NavDropdown, Image } from "react-bootstrap";
 import { useLocation, useNavigate } from "react-router-dom";
@@ -9,23 +8,16 @@ export default function DynamicNavbar() {
   const funcionarioId = sessionStorage.getItem("userId");
   const isAdmin = pathname.startsWith("/office/admin");
 
-  // guarda sempre um objecto (nunca null)
   const [empresa, setEmpresa] = useState({});
 
   useEffect(() => {
     let mounted = true;
     (async () => {
       try {
-        const res = await fetch("http://localhost:5000/admin/empresa");
-        if (!res.ok) {
-          // não quebrar: mantemos estado vazio
-          if (mounted) setEmpresa({});
-          return;
-        }
+        const res = await fetch("http://localhost:5002/admin/empresa");
         const data = await res.json();
         if (mounted) setEmpresa(data || {});
-      } catch (err) {
-        console.error("Erro ao buscar dados da empresa:", err);
+      } catch {
         if (mounted) setEmpresa({});
       }
     })();
@@ -40,65 +32,90 @@ export default function DynamicNavbar() {
   const sairComTurno = async () => {
     if (funcionarioId && !isAdmin) {
       try {
-        await fetch("http://localhost:5000/admin/turno/encerrar", {
+        await fetch("http://localhost:5002/admin/turno/encerrar", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ funcionarioId }),
         });
       } catch (err) {
-        console.error("Erro ao encerrar turno:", err);
+        console.error(err);
       }
     }
     sair();
   };
 
-  // menus adaptados para loja de materiais
   const menus = {
     "/office/admin": [
-      ["Dashboard", "/office/admin/dashboard"],
-      ["Armazém", "/office/admin/estoque/geral"],
-      ["Categorias", "/office/admin/categorias"],
-      ["Materiais", "/office/admin/materiais"],
-      ["Fornecedores", "/office/admin/fornecedores"],
-      ["Vendas", "/office/admin/vendas"],
-      ["Relatórios", "/office/admin/relatorios"],
-      ["Usuários", "/office/admin/users"],
-      ["Configurar", "/office/admin/config/sys"],
+      {
+        label: "Principal",
+        items: [
+          ["Dashboard", "/office/admin/dashboard"],
+          ["Vendas", "/office/admin/vendas"],
+          ["Lucro", "/office/admin/lucro"],
+        ],
+      },
+      {
+        label: "Estoque",
+        items: [
+          ["Armazém", "/office/admin/estoque/geral"],
+          ["Categorias", "/office/admin/categorias"],
+          ["Materiais", "/office/admin/materiais"],
+          ["Fornecedores", "/office/admin/fornecedores"],
+          ["Saída Stock", "/office/admin/saidaEstoque"],
+        ],
+      },
+      {
+        label: "Relatórios",
+        items: [["Relatórios", "/office/admin/relatorios"]],
+      },
+      {
+        label: "Sistema",
+        items: [
+          ["Usuários", "/office/admin/users"],
+          ["Configurar", "/office/admin/config/sys"],
+          ["Dívidas", "/office/admin/divida"],
+        ],
+      },
     ],
     "/office/caixa": [
-      ["Registrar Venda", "/office/caixa/home"],
-      ["Clientes", "/office/caixa/clientes"],
-      ["Relatório", "/office/caixa/relatorio"],
-      ["Armazém", "/office/caixa/estoque"],
+      {
+        label: "Caixa",
+        items: [
+          ["Registrar Venda", "/office/caixa/home"],
+          ["Clientes", "/office/caixa/clientes"],
+          ["Relatório", "/office/caixa/relatorio"],
+        ],
+      },
     ],
     "/": [
-      ["Materiais", "/materiais"],
-      ["Contacto", "/contacto"],
-      ["Sobre", "/about"],
-      ["Login", "/office/login"],
+      {
+        label: "Principal",
+        items: [
+          ["Materiais", "/materiais"],
+          ["Contacto", "/contacto"],
+          ["Sobre", "/about"],
+          ["Login", "/office/login"],
+        ],
+      },
     ],
   };
 
   const match = Object.keys(menus).find((key) => pathname.startsWith(key)) || "/";
   const links = menus[match];
 
-  // prefer logo real, depois logoUrl; se nenhum, mostra nome ou texto genérico
   const logoSrc = empresa?.logo || empresa?.logoUrl || null;
   const displayName = empresa?.nome || "Loja de Materiais";
 
   return (
     <Navbar bg="light" expand="lg" sticky="top" className="shadow-sm border-bottom">
       <Container>
-        <Navbar.Brand onClick={() => navigate("/")} style={{ cursor: "pointer", display: "flex", gap: 8, alignItems: "center" }}>
+        <Navbar.Brand
+          onClick={() => navigate("/")}
+          style={{ cursor: "pointer", display: "flex", gap: 8, alignItems: "center" }}
+        >
           {logoSrc ? (
             <>
-              {/* se o backend devolve caminho relativo (ex: /uploads/...), tenta prefixar a origem */}
-              <Image
-                src={"http://localhost:5000"+logoSrc}
-                alt={displayName}
-                height="40"
-                rounded
-              />
+              <Image src={"http://localhost:5002" + logoSrc} alt={displayName} height="40" rounded />
               <span className="ms-2 fw-bold">{displayName}</span>
             </>
           ) : (
@@ -109,17 +126,29 @@ export default function DynamicNavbar() {
         <Navbar.Toggle />
         <Navbar.Collapse>
           <Nav className="ms-auto d-flex align-items-center">
-            {links.map(([label, href]) => (
-              <Nav.Link key={href} onClick={() => navigate(href)} className="fw-semibold menu-link">
-                {label}
-              </Nav.Link>
-            ))}
-
-            
-              <NavDropdown title="Conta" align="end" className="ms-2">
-                <NavDropdown.Item onClick={sair}>Sair</NavDropdown.Item>
+            {links.map((group) =>
+              group.items.length > 1 ? (
+                <NavDropdown key={group.label} title={group.label} align="end" className="ms-2">
+                  {group.items.map(([label, href]) => (
+                    <NavDropdown.Item key={href} onClick={() => navigate(href)}>
+                      {label}
+                    </NavDropdown.Item>
+                  ))}
                 </NavDropdown>
-        
+              ) : (
+                <Nav.Link
+                  key={group.items[0][1]}
+                  onClick={() => navigate(group.items[0][1])}
+                  className="fw-semibold ms-2"
+                >
+                  {group.items[0][0]}
+                </Nav.Link>
+              )
+            )}
+
+            <NavDropdown title="Conta" align="end" className="ms-2">
+              <NavDropdown.Item onClick={sairComTurno}>Sair</NavDropdown.Item>
+            </NavDropdown>
           </Nav>
         </Navbar.Collapse>
       </Container>

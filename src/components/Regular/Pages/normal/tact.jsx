@@ -6,7 +6,7 @@ function Contactos() {
   const [empresa, setEmpresa] = useState(null);
 
   useEffect(() => {
-    fetch("http://localhost:5000/admin/empresa") // rota do back
+    fetch("http://localhost:5002/admin/empresa") // rota do back
       .then((res) => res.json())
       .then((data) => setEmpresa(data))
       .catch((err) => console.error("Erro ao carregar empresa:", err));

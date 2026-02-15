@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { Container, Row, Col, Card, Button, Table, Modal, Form } from "react-bootstrap";
-import DynamicNavbar from "../NAV.JSX";
+import DynamicNavbar from "../NAV.jsx";
 
 export default function Clientes() {
   const [clientes, setClientes] = useState([]);
@@ -9,7 +9,7 @@ export default function Clientes() {
 
   // Buscar clientes do backend
   useEffect(() => {
-    fetch("http://localhost:5000/admin/clientes")
+    fetch("http://localhost:5002/admin/clientes")
       .then(res => res.json())
       .then(setClientes)
       .catch(err => console.error("Erro ao carregar clientes:", err));
@@ -27,7 +27,7 @@ export default function Clientes() {
     }
 
     try {
-      const res = await fetch("http://localhost:5000/admin/clientes", {
+      const res = await fetch("http://localhost:5002/admin/clientes", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(novoCliente),

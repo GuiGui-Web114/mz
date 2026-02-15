@@ -1,13 +1,13 @@
 import { useEffect, useState } from "react";
 import { Container, Row, Col, Card } from "react-bootstrap";
-import DynamicNavbar from "../NAV.JSX";
+import DynamicNavbar from "../NAV.jsx";
 
 function Produtos() {
   const [produtos, setProdutos] = useState([]);
   const [agrupados, setAgrupados] = useState({});
 
   useEffect(() => {
-    fetch("http://localhost:5000/admin/materiais")
+    fetch("http://localhost:5002/admin/materiais")
       .then((res) => res.json())
       .then((data) => {
         setProdutos(data);
@@ -47,7 +47,7 @@ function Produtos() {
                       {item.imagem && (
                         <Card.Img
                           variant="top"
-                          src={"http://localhost:5000"+item.imagem}
+                          src={"http://localhost:5002"+item.imagem}
                           alt={item.nome}
                         />
                       )}

@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { Container, Card, Button } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
-import DynamicNavbar from "./NAV.JSX";
+import DynamicNavbar from "./NAV.jsx";
 
 function TelaTurno() {
   const [turno, setTurno] = useState(null);
@@ -24,7 +24,7 @@ function TelaTurno() {
   useEffect(() => {
     if (!funcionarioId) return;
 
-    fetch("http://localhost:5000/admin/turno/atual", {
+    fetch("http://localhost:5002/admin/turno/atual", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ funcionarioId }),
@@ -41,7 +41,7 @@ function TelaTurno() {
   }, []);
 
   const iniciarTurno = () => {
-    fetch("http://localhost:5000/admin/turno/iniciar", {
+    fetch("http://localhost:5002/admin/turno/iniciar", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ funcionarioId }),
@@ -55,7 +55,7 @@ function TelaTurno() {
   };
 
   const encerrarTurno = () => {
-    fetch("http://localhost:5000/admin/turno/encerrar", {
+    fetch("http://localhost:5002/admin/turno/encerrar", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ funcionarioId }),
